@@ -166,7 +166,7 @@ body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; overflow: hidden
 /* --- 4. DESKTOP ANIMATION --- */
 #desktop {
     width: 100vw; height: 100vh; position: relative;
-    background: radial-gradient(circle at 50% 120%, #e5e7eb, #fff);
+    background: url('https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=1920&auto=format&fit=crop') center/cover no-repeat;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -180,6 +180,30 @@ body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; overflow: hidden
     opacity: 1; 
     transform: scale(1); 
     pointer-events: auto;
+}
+
+/* --- HOME CLOCK (seperti lockscreen, ukuran normal) --- */
+#home-clock {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    pointer-events: none;
+    z-index: 1;
+    font-family: 'Poppins', sans-serif;
+}
+.home-time {
+    font-size: 4rem; /* sama dengan lockscreen */
+    font-weight: 300;
+    line-height: 1.2;
+}
+.home-date {
+    font-size: 1.2rem; /* sama dengan lockscreen */
+    font-weight: 300;
+    opacity: 0.9;
 }
 
 /* --- TOP BAR ENHANCED --- */
@@ -338,10 +362,10 @@ body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; overflow: hidden
     flex: 1; text-align: center;
 }
 .win-controls { 
-    display: flex; gap: 8px; 
+    display: flex; gap: 10px; /* perbesar gap */
 }
 .win-btn { 
-    width: 12px; height: 12px; border-radius: 50%; 
+    width: 14px; height: 14px; border-radius: 50%; /* diperbesar 20% dari 12px */
     border: none; cursor: pointer; transition: .2s;
     display: flex; align-items: center; justify-content: center;
 }
@@ -707,6 +731,77 @@ body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; overflow: hidden
     opacity: 0.8;
 }
 
+/* --- MUSIC PLAYER ENHANCED --- */
+.music-player-enhanced {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background: #f9fafb;
+}
+.music-player-enhanced audio {
+    width: 100%;
+    margin: 15px 0;
+}
+.music-player-enhanced .file-input {
+    margin: 10px 0;
+    padding: 10px;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+}
+.music-player-enhanced .playlist {
+    flex: 1;
+    overflow-y: auto;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #fff;
+}
+.music-player-enhanced .playlist-item {
+    padding: 10px;
+    border-bottom: 1px solid #e5e7eb;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.music-player-enhanced .playlist-item:hover {
+    background: #f3f4f6;
+}
+.music-player-enhanced .playlist-item.playing {
+    background: #e0f2fe;
+    font-weight: 600;
+}
+
+/* --- VIDEO PLAYER ENHANCED --- */
+.video-player-enhanced {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #000;
+    color: white;
+}
+.video-player-enhanced video {
+    width: 100%;
+    flex: 1;
+    background: #000;
+}
+.video-player-enhanced .video-controls {
+    padding: 15px;
+    background: #1f1f1f;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+.video-player-enhanced .file-input {
+    padding: 8px 12px;
+    background: #333;
+    border-radius: 6px;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
 /* --- GAME STYLES --- */
 .game-container {
     padding: 20px;
@@ -893,16 +988,364 @@ body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; overflow: hidden
 .power-btn { font-size: 18px; padding: 8px; border-radius: 6px; cursor: pointer; transition: .2s; }
 .power-btn:hover { background: #fee2e2; color: #dc2626; }
 
-/* --- APPS CSS --- */
-.file-sidebar { width: 140px; background: #f8fafc; border-right: 1px solid #e5e7eb; padding: 15px; font-size: 13px; }
-.file-item { padding: 8px; border-radius: 6px; cursor: pointer; display: flex; gap: 8px; align-items: center; color: #475569; }
-.file-item:hover { background: #e2e8f0; color: #111; }
-.file-main { flex: 1; padding: 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 15px; grid-auto-rows: 90px; }
-.f-icon { width: 100%; height: 60px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 32px; background: #fff; border: 1px solid #f1f5f9; transition: .2s; }
-.f-icon:hover { background: #eff6ff; border-color: #bfdbfe; }
-.f-name { font-size: 11px; text-align: center; margin-top: 5px; color: #333; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+/* --- ENHANCED FILE MANAGER STYLES --- */
+.file-manager {
+    display: flex;
+    height: 100%;
+    background: #fff;
+    font-family: 'Inter', sans-serif;
+}
 
-/* Terminal App */
+/* Sidebar */
+.file-sidebar {
+    width: 200px;
+    background: #f8fafc;
+    border-right: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    padding: 15px 0;
+}
+.file-sidebar-section {
+    padding: 0 15px;
+    margin-bottom: 20px;
+}
+.file-sidebar-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #6b7280;
+    font-weight: 600;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+}
+.file-sidebar-item {
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: #374151;
+    margin-bottom: 2px;
+}
+.file-sidebar-item:hover {
+    background: #e2e8f0;
+}
+.file-sidebar-item.active {
+    background: #e0f2fe;
+    color: #0369a1;
+    font-weight: 500;
+}
+.file-sidebar-item i {
+    width: 18px;
+    color: #64748b;
+}
+.file-sidebar-item.active i {
+    color: #0369a1;
+}
+
+/* Main content */
+.file-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Toolbar */
+.file-toolbar {
+    padding: 10px 15px;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: #fff;
+}
+.file-toolbar-btn {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+    background: white;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.file-toolbar-btn:hover {
+    background: #f3f4f6;
+}
+.file-toolbar-btn i {
+    font-size: 12px;
+    color: #4b5563;
+}
+.file-toolbar-search {
+    flex: 1;
+    position: relative;
+}
+.file-toolbar-search input {
+    width: 100%;
+    padding: 8px 12px 8px 32px;
+    border-radius: 20px;
+    border: 1px solid #e5e7eb;
+    font-size: 13px;
+    outline: none;
+}
+.file-toolbar-search i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: #9ca3af;
+}
+.file-toolbar-search input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59,130,246,0.1);
+}
+
+/* Path bar */
+.file-path {
+    padding: 8px 15px;
+    background: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+}
+.file-path-item {
+    color: #6b7280;
+    cursor: pointer;
+    padding: 4px 6px;
+    border-radius: 4px;
+}
+.file-path-item:hover {
+    background: #e5e7eb;
+    color: #111;
+}
+.file-path-item:last-child {
+    color: #111;
+    font-weight: 500;
+}
+.file-path-separator {
+    color: #9ca3af;
+}
+
+/* Files grid */
+.file-grid-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+    background: #fff;
+}
+.file-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 15px;
+}
+.file-grid-item {
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 8px;
+    transition: 0.2s;
+    position: relative;
+    user-select: none;
+    border: 2px solid transparent;
+}
+.file-grid-item:hover {
+    background: #f3f4f6;
+}
+.file-grid-item.selected {
+    background: #e0f2fe;
+    border-color: #3b82f6;
+}
+.file-grid-item.dragging {
+    opacity: 0.5;
+    transform: scale(0.95);
+}
+.file-grid-icon {
+    font-size: 40px;
+    text-align: center;
+    margin-bottom: 5px;
+}
+.file-grid-name {
+    font-size: 11px;
+    text-align: center;
+    word-break: break-word;
+    color: #374151;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.file-grid-size {
+    font-size: 9px;
+    color: #9ca3af;
+    text-align: center;
+    margin-top: 2px;
+}
+
+/* Preview panel */
+.file-preview {
+    width: 250px;
+    border-left: 1px solid #e5e7eb;
+    background: #f9fafb;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.file-preview-header {
+    padding: 12px 15px;
+    border-bottom: 1px solid #e5e7eb;
+    font-weight: 600;
+    font-size: 13px;
+    color: #374151;
+}
+.file-preview-content {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+.file-preview-icon {
+    font-size: 60px;
+    text-align: center;
+}
+.file-preview-info {
+    width: 100%;
+    background: white;
+    border-radius: 8px;
+    padding: 12px;
+    border: 1px solid #e5e7eb;
+}
+.file-preview-info-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    padding: 6px 0;
+    border-bottom: 1px solid #f3f4f6;
+}
+.file-preview-info-row:last-child {
+    border-bottom: none;
+}
+.file-preview-label {
+    color: #6b7280;
+}
+.file-preview-value {
+    color: #111;
+    font-weight: 500;
+}
+.file-preview-image {
+    max-width: 100%;
+    max-height: 200px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+}
+.file-preview-video {
+    max-width: 100%;
+    max-height: 200px;
+    border-radius: 8px;
+}
+.file-preview-text {
+    width: 100%;
+    background: white;
+    border-radius: 8px;
+    padding: 12px;
+    border: 1px solid #e5e7eb;
+    font-size: 12px;
+    font-family: monospace;
+    white-space: pre-wrap;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* Recycle bin */
+.recycle-bin {
+    background: #fff;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.recycle-bin-header {
+    padding: 15px;
+    border-bottom: 1px solid #e5e7eb;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.recycle-bin-actions {
+    display: flex;
+    gap: 10px;
+}
+.recycle-bin-btn {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+    background: white;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.recycle-bin-btn:hover {
+    background: #f3f4f6;
+}
+.recycle-bin-btn.danger:hover {
+    background: #fee2e2;
+    color: #dc2626;
+    border-color: #fecaca;
+}
+.recycle-bin-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+}
+.recycle-bin-item {
+    padding: 10px;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+.recycle-bin-item:hover {
+    background: #f9fafb;
+}
+.recycle-bin-item.selected {
+    background: #e0f2fe;
+}
+.recycle-bin-icon {
+    font-size: 24px;
+}
+.recycle-bin-details {
+    flex: 1;
+}
+.recycle-bin-name {
+    font-size: 13px;
+    font-weight: 500;
+}
+.recycle-bin-meta {
+    font-size: 11px;
+    color: #6b7280;
+}
+.recycle-bin-restore {
+    color: #3b82f6;
+    cursor: pointer;
+    padding: 5px;
+}
+.recycle-bin-restore:hover {
+    background: #e5e7eb;
+    border-radius: 4px;
+}
+
+/* --- APPS CSS (existing) --- */
 .terminal {
     height: 100%; background: #111; color: #0f0; font-family: 'Courier New', monospace;
     padding: 15px; overflow-y: auto; font-size: 14px;
@@ -912,33 +1355,89 @@ body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; overflow: hidden
 .terminal-input { background: transparent; border: none; color: #0f0; 
     font-family: 'Courier New', monospace; font-size: 14px; width: 80%; outline: none; }
 
-/* Music Player App */
-.music-player {
-    height: 100%; display: flex; flex-direction: column;
-}
-.music-cover {
-    height: 200px; background: linear-gradient(135deg, #667eea, #764ba2);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 60px; color: white;
-}
-.music-info { padding: 20px; text-align: center; }
-.music-title { font-size: 20px; font-weight: 600; margin-bottom: 5px; }
-.music-artist { font-size: 14px; color: #666; margin-bottom: 20px; }
-.music-controls-app { display: flex; justify-content: center; gap: 20px; margin-top: 20px; }
-.music-controls-app button {
-    width: 50px; height: 50px; border-radius: 50%; border: none;
-    background: #111; color: white; font-size: 20px; cursor: pointer;
-}
-
-/* Calculator */
 .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 15px; height: 100%; }
 .calc-btn { border: none; background: #f9fafb; border-radius: 8px; font-size: 18px; font-weight: 500; cursor: pointer; transition: .1s; }
 .calc-btn:hover { background: #e5e7eb; }
 .calc-btn.orange { background: #111; color: #fff; }
 .calc-display { grid-column: span 4; background: #fff; border: 1px solid #eee; border-radius: 8px; font-size: 28px; text-align: right; padding: 10px; margin-bottom: 10px; font-family: 'Inter'; font-weight:300;}
 
-/* Other Apps */
 .app-content { padding: 20px; height: 100%; overflow-y: auto; }
+
+/* Calendar App */
+.calendar-app {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    font-family: 'Inter', sans-serif;
+}
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #e5e7eb;
+    background: #f9fafb;
+}
+.calendar-header h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #111;
+}
+.calendar-nav button {
+    background: none;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 6px 12px;
+    margin: 0 5px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #374151;
+    transition: 0.2s;
+}
+.calendar-nav button:hover {
+    background: #f3f4f6;
+}
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    padding: 10px 0;
+    background: #f3f4f6;
+    font-weight: 600;
+    font-size: 12px;
+    color: #6b7280;
+    text-align: center;
+}
+.calendar-dates {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    background: #e5e7eb;
+    flex: 1;
+    padding: 1px;
+}
+.calendar-date {
+    background: white;
+    padding: 10px;
+    min-height: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 14px;
+    color: #374151;
+    position: relative;
+}
+.calendar-date.today {
+    background: #eff6ff;
+    font-weight: 600;
+    color: #3b82f6;
+}
+.calendar-date.other-month {
+    color: #9ca3af;
+    background: #f9fafb;
+}
 
 /* Wallpaper app */
 .wallpaper-tabs { display: flex; border-bottom: 1px solid #e5e7eb; padding: 0 20px; }
@@ -988,6 +1487,12 @@ body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; overflow: hidden
 
 <!-- DESKTOP -->
 <div id="desktop" onclick="closeStartMenu(event); closeAllDropdowns(); closeWidgetTray();">
+    <!-- Home Clock -->
+    <div id="home-clock">
+        <div class="home-time" id="home-time">--:--</div>
+        <div class="home-date" id="home-date">---, -- --- ----</div>
+    </div>
+
     <div class="top-bar" id="topBar">
         <div style="display: flex; align-items: center; gap: 20px;">
             <span style="font-weight:700; font-family:'Poppins'">Pufutara OS</span>
@@ -1173,8 +1678,7 @@ body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; overflow: hidden
 <script>
 // ========== VARIABLES GLOBAL ==========
 let zIndex = 100;
-// Tambahkan video dan notes ke pinned apps default
-let pinnedApps = ['files', 'browser', 'terminal', 'music', 'settings', 'calculator', 'calendar', 'weather', 'camera', 'video', 'notes'];
+let pinnedApps = ['files', 'browser', 'terminal', 'music', 'settings', 'calculator', 'calendar', 'weather', 'camera', 'video', 'notes', 'snake', 'tictactoe', 'memory'];
 let dockItems = [];
 let contextMenuTarget = null;
 let soundLevel = 75;
@@ -1186,6 +1690,78 @@ let hideTimer = null;
 let mouseY = 0;
 let cameraStream = null;
 
+// File Manager variables
+let currentFolder = 'home';
+let selectedFiles = [];
+let fileSystem = {
+    home: {
+        name: 'Home',
+        type: 'folder',
+        items: ['documents', 'downloads', 'pictures', 'music', 'videos', 'project', 'tugas.docx', 'wallpaper.jpg', 'lagu.mp3', 'video.mp4', 'setup.exe', 'data.xlsx']
+    },
+    documents: {
+        name: 'Documents',
+        type: 'folder',
+        items: ['tugas.docx', 'data.xlsx', 'notes.txt', 'proposal.pdf']
+    },
+    downloads: {
+        name: 'Downloads',
+        type: 'folder',
+        items: ['setup.exe', 'installer.dmg', 'archive.zip']
+    },
+    pictures: {
+        name: 'Pictures',
+        type: 'folder',
+        items: ['wallpaper.jpg', 'foto1.png', 'foto2.jpg', 'screenshot.png']
+    },
+    music: {
+        name: 'Music',
+        type: 'folder',
+        items: ['lagu.mp3', 'song1.mp3', 'song2.mp3', 'playlist.m3u']
+    },
+    videos: {
+        name: 'Videos',
+        type: 'folder',
+        items: ['video.mp4', 'movie.mp4', 'clip.avi']
+    },
+    project: {
+        name: 'Project',
+        type: 'folder',
+        items: ['index.html', 'style.css', 'script.js', 'readme.txt']
+    }
+};
+
+let fileDetails = {
+    'tugas.docx': { type: 'document', size: '245 KB', modified: '2025-02-20', icon: '📄' },
+    'data.xlsx': { type: 'spreadsheet', size: '180 KB', modified: '2025-02-19', icon: '📊' },
+    'notes.txt': { type: 'text', size: '2 KB', modified: '2025-02-21', icon: '📝' },
+    'proposal.pdf': { type: 'pdf', size: '1.2 MB', modified: '2025-02-18', icon: '📕' },
+    'wallpaper.jpg': { type: 'image', size: '850 KB', modified: '2025-02-17', icon: '🖼️' },
+    'foto1.png': { type: 'image', size: '2.1 MB', modified: '2025-02-16', icon: '🖼️' },
+    'foto2.jpg': { type: 'image', size: '1.5 MB', modified: '2025-02-15', icon: '🖼️' },
+    'screenshot.png': { type: 'image', size: '320 KB', modified: '2025-02-21', icon: '📸' },
+    'lagu.mp3': { type: 'audio', size: '3.5 MB', modified: '2025-02-14', icon: '🎵' },
+    'song1.mp3': { type: 'audio', size: '4.2 MB', modified: '2025-02-13', icon: '🎵' },
+    'song2.mp3': { type: 'audio', size: '3.8 MB', modified: '2025-02-12', icon: '🎵' },
+    'playlist.m3u': { type: 'playlist', size: '1 KB', modified: '2025-02-11', icon: '📋' },
+    'video.mp4': { type: 'video', size: '12 MB', modified: '2025-02-10', icon: '🎬' },
+    'movie.mp4': { type: 'video', size: '25 MB', modified: '2025-02-09', icon: '🎬' },
+    'clip.avi': { type: 'video', size: '8 MB', modified: '2025-02-08', icon: '🎬' },
+    'setup.exe': { type: 'application', size: '5.2 MB', modified: '2025-02-07', icon: '💾' },
+    'installer.dmg': { type: 'application', size: '4.5 MB', modified: '2025-02-06', icon: '💾' },
+    'archive.zip': { type: 'archive', size: '2.8 MB', modified: '2025-02-05', icon: '🗜️' },
+    'index.html': { type: 'code', size: '3 KB', modified: '2025-02-21', icon: '🌐' },
+    'style.css': { type: 'code', size: '2 KB', modified: '2025-02-21', icon: '🎨' },
+    'script.js': { type: 'code', size: '5 KB', modified: '2025-02-21', icon: '⚙️' },
+    'readme.txt': { type: 'text', size: '1 KB', modified: '2025-02-21', icon: '📝' }
+};
+
+let recycleBin = [];
+
+// Music player variables
+let musicPlaylist = [];
+let currentMusicIndex = 0;
+
 // ========== LOCKSCREEN LOGIC ==========
 const CORRECT_PASSWORD = "putraudahizinin";
 const lockscreen = document.getElementById('lockscreen');
@@ -1194,7 +1770,6 @@ const passwordPanel = document.getElementById('passwordPanel');
 const passwordInput = document.getElementById('passwordInput');
 const errorDiv = document.getElementById('lockscreen-error');
 
-// Update jam di lockscreen
 function updateLockscreenClock() {
     const now = new Date();
     const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
@@ -1205,25 +1780,21 @@ function updateLockscreenClock() {
 setInterval(updateLockscreenClock, 1000);
 updateLockscreenClock();
 
-// Fungsi menampilkan panel password
 window.showPasswordPanel = function() {
     passwordPanel.classList.add('show');
     passwordInput.focus();
 };
 
-// Handle input password
 passwordInput.addEventListener('keydown', function(e) {
     if(e.key === 'Enter') {
         if(this.value === CORRECT_PASSWORD) {
-            // Password benar, tampilkan desktop
             lockscreen.style.opacity = '0';
             setTimeout(() => {
                 lockscreen.style.display = 'none';
                 desktop.style.display = 'block';
-                // Beri sedikit waktu untuk transisi
                 setTimeout(() => {
                     desktop.classList.add('loaded');
-                    initSystem(); // Inisialisasi desktop
+                    initSystem();
                 }, 50);
             }, 500);
         } else {
@@ -1236,12 +1807,10 @@ passwordInput.addEventListener('keydown', function(e) {
 
 // ========== WELCOME & BOOT SEQUENCE ==========
 window.onload = () => {
-    // 1. Tampilkan Welcome Screen
     setTimeout(() => { 
         document.getElementById('welcome-bar').style.width = '100%'; 
     }, 100);
     
-    // 2. Setelah welcome selesai, lanjut ke boot screen
     setTimeout(() => {
         const welcomeScreen = document.getElementById('welcome-screen');
         const bootScreen = document.getElementById('boot-screen');
@@ -1251,17 +1820,14 @@ window.onload = () => {
             welcomeScreen.style.display = 'none';
             bootScreen.style.opacity = '1';
             
-            // Mulai boot progress
             setTimeout(() => { 
                 document.getElementById('boot-bar').style.width = '100%'; 
             }, 500);
             
-            // Setelah boot selesai, masuk ke lockscreen
             setTimeout(() => {
                 bootScreen.style.opacity = '0';
                 setTimeout(() => {
                     bootScreen.style.display = 'none';
-                    // Tampilkan lockscreen
                     lockscreen.style.display = 'flex';
                 }, 1000);
             }, 3000);
@@ -1274,6 +1840,8 @@ function initSystem() {
     loadSavedData();
     updateClock();
     setInterval(updateClock, 1000);
+    updateHomeClock();
+    setInterval(updateHomeClock, 1000);
     initDock();
     document.addEventListener('click', closeContextMenu);
     document.addEventListener('contextmenu', closeContextMenu);
@@ -1345,6 +1913,11 @@ function loadSavedData() {
         document.getElementById('brightness-value').textContent = brightnessLevel + '%';
         document.getElementById('brightness-slider').value = brightnessLevel;
     }
+    
+    const savedRecycleBin = localStorage.getItem('pufutara_recyclebin');
+    if(savedRecycleBin) {
+        recycleBin = JSON.parse(savedRecycleBin);
+    }
 }
 
 function savePinnedApps() {
@@ -1380,6 +1953,10 @@ function loadWidgets() {
     }
 }
 
+function saveRecycleBin() {
+    localStorage.setItem('pufutara_recyclebin', JSON.stringify(recycleBin));
+}
+
 // ========== CLOCK ==========
 function updateClock() {
     const now = new Date();
@@ -1388,6 +1965,14 @@ function updateClock() {
     const dateStr = now.toLocaleDateString('id-ID', dateOpts);
     const timeStr = now.toLocaleTimeString('id-ID', timeOpts).replace('.', ':');
     document.getElementById('clock').innerText = `${dateStr} - ${timeStr}`;
+}
+
+function updateHomeClock() {
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+    const dateStr = now.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+    document.getElementById('home-time').innerText = timeStr;
+    document.getElementById('home-date').innerText = dateStr;
 }
 
 // ========== WIDGETS ==========
@@ -1650,30 +2235,867 @@ function shutdown() {
 document.getElementById('sound-slider').addEventListener('input', function(){ setSound(this.value); });
 document.getElementById('brightness-slider').addEventListener('input', function(){ setBrightness(this.value); });
 
-// ========== APP DATA (lengkap, disalin dari kode sebelumnya) ==========
+// ========== FILE MANAGER FUNCTIONS ==========
+function openFileManager() {
+    openApp('files');
+}
+
+function renderFileManager(container) {
+    const folder = fileSystem[currentFolder];
+    if (!folder) return;
+    
+    let items = folder.items || [];
+    
+    // Filter berdasarkan pencarian
+    const searchInput = container.querySelector('.file-search-input');
+    if (searchInput && searchInput.value) {
+        const searchTerm = searchInput.value.toLowerCase();
+        items = items.filter(item => item.toLowerCase().includes(searchTerm));
+    }
+    
+    let html = `
+    <div class="file-manager">
+        <div class="file-sidebar">
+            <div class="file-sidebar-section">
+                <div class="file-sidebar-title">FOLDERS</div>
+                <div class="file-sidebar-item ${currentFolder === 'home' ? 'active' : ''}" onclick="navigateToFolder('home')">
+                    <i class="fas fa-home"></i> Home
+                </div>
+                <div class="file-sidebar-item ${currentFolder === 'documents' ? 'active' : ''}" onclick="navigateToFolder('documents')">
+                    <i class="fas fa-file-alt"></i> Documents
+                </div>
+                <div class="file-sidebar-item ${currentFolder === 'downloads' ? 'active' : ''}" onclick="navigateToFolder('downloads')">
+                    <i class="fas fa-download"></i> Downloads
+                </div>
+                <div class="file-sidebar-item ${currentFolder === 'pictures' ? 'active' : ''}" onclick="navigateToFolder('pictures')">
+                    <i class="fas fa-image"></i> Pictures
+                </div>
+                <div class="file-sidebar-item ${currentFolder === 'music' ? 'active' : ''}" onclick="navigateToFolder('music')">
+                    <i class="fas fa-music"></i> Music
+                </div>
+                <div class="file-sidebar-item ${currentFolder === 'videos' ? 'active' : ''}" onclick="navigateToFolder('videos')">
+                    <i class="fas fa-video"></i> Videos
+                </div>
+                <div class="file-sidebar-item ${currentFolder === 'project' ? 'active' : ''}" onclick="navigateToFolder('project')">
+                    <i class="fas fa-code"></i> Project
+                </div>
+            </div>
+            <div class="file-sidebar-section">
+                <div class="file-sidebar-title">STORAGE</div>
+                <div class="file-sidebar-item" onclick="openRecycleBin()">
+                    <i class="fas fa-trash"></i> Recycle Bin
+                    ${recycleBin.length ? `<span style="margin-left:auto; background:#ef4444; color:white; padding:2px 6px; border-radius:10px; font-size:10px;">${recycleBin.length}</span>` : ''}
+                </div>
+            </div>
+        </div>
+        <div class="file-main">
+            <div class="file-toolbar">
+                <button class="file-toolbar-btn" onclick="navigateBack()"><i class="fas fa-arrow-left"></i> Back</button>
+                <button class="file-toolbar-btn" onclick="createNewFolder()"><i class="fas fa-folder-plus"></i> New Folder</button>
+                <button class="file-toolbar-btn" onclick="compressSelected()"><i class="fas fa-file-archive"></i> Compress</button>
+                <button class="file-toolbar-btn" onclick="deleteSelected()"><i class="fas fa-trash"></i> Delete</button>
+                <div class="file-toolbar-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" class="file-search-input" placeholder="Search files..." oninput="searchFiles(this.value)">
+                </div>
+            </div>
+            <div class="file-path">
+                <span class="file-path-item" onclick="navigateToFolder('home')">Home</span>
+                ${getPathBreadcrumbs()}
+            </div>
+            <div class="file-grid-container">
+                <div class="file-grid" id="file-grid">
+                    ${renderFileGrid(items)}
+                </div>
+            </div>
+        </div>
+        <div class="file-preview" id="file-preview">
+            <div class="file-preview-header">Preview</div>
+            <div class="file-preview-content" id="file-preview-content">
+                <div style="color:#6b7280; text-align:center; padding:20px;">Pilih file untuk preview</div>
+            </div>
+        </div>
+    </div>
+    `;
+    
+    container.innerHTML = html;
+    
+    // Setup drag and drop
+    setupDragAndDrop(container);
+}
+
+function getPathBreadcrumbs() {
+    if (currentFolder === 'home') return '';
+    
+    let path = '';
+    const folder = fileSystem[currentFolder];
+    if (folder) {
+        path = `<span class="file-path-separator">/</span><span class="file-path-item" onclick="navigateToFolder('${currentFolder}')">${folder.name}</span>`;
+    }
+    return path;
+}
+
+function renderFileGrid(items) {
+    if (items.length === 0) {
+        return '<div style="grid-column:1/-1; text-align:center; padding:40px; color:#6b7280;">Folder kosong</div>';
+    }
+    
+    return items.map(item => {
+        const isFolder = fileSystem[item] !== undefined;
+        const details = fileDetails[item] || { type: 'unknown', size: '0 KB', modified: '2025-02-21', icon: isFolder ? '📁' : '📄' };
+        const icon = isFolder ? '📁' : (details.icon || '📄');
+        const isSelected = selectedFiles.includes(item);
+        
+        return `
+        <div class="file-grid-item ${isSelected ? 'selected' : ''}" 
+             data-filename="${item}"
+             ondblclick="openFile('${item}')"
+             onclick="selectFile('${item}', event)"
+             draggable="true"
+             ondragstart="dragStart(event, '${item}')"
+             ondragend="dragEnd(event)"
+             ondrop="dropOnItem(event, '${item}')"
+             ondragover="dragOver(event)">
+            <div class="file-grid-icon">${icon}</div>
+            <div class="file-grid-name" title="${item}">${item}</div>
+            <div class="file-grid-size">${isFolder ? 'Folder' : details.size}</div>
+        </div>
+        `;
+    }).join('');
+}
+
+function navigateToFolder(folderId) {
+    if (fileSystem[folderId]) {
+        currentFolder = folderId;
+        selectedFiles = [];
+        const win = document.querySelector('.window[id^="win-files"]');
+        if (win) {
+            renderFileManager(win.querySelector('.win-content'));
+        }
+    }
+}
+
+function navigateBack() {
+    // Simple back navigation - bisa diperbaiki dengan history
+    if (currentFolder !== 'home') {
+        navigateToFolder('home');
+    }
+}
+
+function selectFile(filename, event) {
+    if (event.ctrlKey) {
+        // Multi select dengan Ctrl
+        const index = selectedFiles.indexOf(filename);
+        if (index === -1) {
+            selectedFiles.push(filename);
+        } else {
+            selectedFiles.splice(index, 1);
+        }
+    } else {
+        // Single select
+        selectedFiles = [filename];
+    }
+    
+    // Update UI
+    const win = document.querySelector('.window[id^="win-files"]');
+    if (win) {
+        const items = win.querySelectorAll('.file-grid-item');
+        items.forEach(item => {
+            if (selectedFiles.includes(item.dataset.filename)) {
+                item.classList.add('selected');
+            } else {
+                item.classList.remove('selected');
+            }
+        });
+    }
+    
+    // Update preview
+    updatePreview(filename);
+}
+
+function updatePreview(filename) {
+    const previewContent = document.getElementById('file-preview-content');
+    if (!previewContent) return;
+    
+    const details = fileDetails[filename];
+    const isFolder = fileSystem[filename] !== undefined;
+    
+    if (isFolder) {
+        previewContent.innerHTML = `
+            <div class="file-preview-icon">📁</div>
+            <div class="file-preview-info">
+                <div class="file-preview-info-row"><span class="file-preview-label">Name:</span><span class="file-preview-value">${filename}</span></div>
+                <div class="file-preview-info-row"><span class="file-preview-label">Type:</span><span class="file-preview-value">Folder</span></div>
+                <div class="file-preview-info-row"><span class="file-preview-label">Items:</span><span class="file-preview-value">${fileSystem[filename].items.length}</span></div>
+            </div>
+        `;
+    } else if (details) {
+        let previewHtml = `
+            <div class="file-preview-icon">${details.icon || '📄'}</div>
+            <div class="file-preview-info">
+                <div class="file-preview-info-row"><span class="file-preview-label">Name:</span><span class="file-preview-value">${filename}</span></div>
+                <div class="file-preview-info-row"><span class="file-preview-label">Type:</span><span class="file-preview-value">${details.type}</span></div>
+                <div class="file-preview-info-row"><span class="file-preview-label">Size:</span><span class="file-preview-value">${details.size}</span></div>
+                <div class="file-preview-info-row"><span class="file-preview-label">Modified:</span><span class="file-preview-value">${details.modified}</span></div>
+            </div>
+        `;
+        
+        // Preview khusus untuk gambar
+        if (details.type === 'image') {
+            previewHtml = `
+                <img src="https://via.placeholder.com/200?text=${filename}" class="file-preview-image" alt="Preview">
+                ${previewHtml}
+            `;
+        }
+        // Preview untuk video
+        else if (details.type === 'video') {
+            previewHtml = `
+                <video class="file-preview-video" controls>
+                    <source src="#" type="video/mp4">
+                    Your browser does not support video.
+                </video>
+                ${previewHtml}
+            `;
+        }
+        // Preview untuk teks
+        else if (details.type === 'text' || details.type === 'code') {
+            previewHtml = `
+                <div class="file-preview-text">Ini adalah contoh isi file teks.\n\nFile: ${filename}\nUkuran: ${details.size}\n\nLorem ipsum dolor sit amet...</div>
+                ${previewHtml}
+            `;
+        }
+        
+        previewContent.innerHTML = previewHtml;
+    }
+}
+
+function openFile(filename) {
+    const isFolder = fileSystem[filename] !== undefined;
+    if (isFolder) {
+        navigateToFolder(filename);
+    } else {
+        const details = fileDetails[filename];
+        if (details) {
+            if (details.type === 'image') {
+                alert(`Membuka gambar: ${filename}`);
+            } else if (details.type === 'audio') {
+                alert(`Memutar musik: ${filename}`);
+                // Bisa integrasi dengan music player
+            } else if (details.type === 'video') {
+                alert(`Memutar video: ${filename}`);
+                // Buka video player
+                openApp('video');
+            } else if (details.type === 'document' || details.type === 'text' || details.type === 'code') {
+                alert(`Membuka dokumen: ${filename}`);
+                // Buka text editor
+                openApp('texteditor');
+            } else {
+                alert(`Membuka file: ${filename}`);
+            }
+        }
+    }
+}
+
+function searchFiles(query) {
+    const win = document.querySelector('.window[id^="win-files"]');
+    if (win) {
+        renderFileManager(win.querySelector('.win-content'));
+    }
+}
+
+function createNewFolder() {
+    const folderName = prompt('Masukkan nama folder baru:');
+    if (folderName && folderName.trim()) {
+        const newFolderId = folderName.toLowerCase().replace(/\s+/g, '_');
+        if (!fileSystem[newFolderId]) {
+            fileSystem[newFolderId] = {
+                name: folderName,
+                type: 'folder',
+                items: []
+            };
+            fileSystem[currentFolder].items.push(newFolderId);
+            
+            const win = document.querySelector('.window[id^="win-files"]');
+            if (win) {
+                renderFileManager(win.querySelector('.win-content'));
+            }
+        } else {
+            alert('Folder dengan nama tersebut sudah ada!');
+        }
+    }
+}
+
+function deleteSelected() {
+    if (selectedFiles.length === 0) {
+        alert('Pilih file/folder yang akan dihapus');
+        return;
+    }
+    
+    if (confirm(`Yakin ingin menghapus ${selectedFiles.length} item ke Recycle Bin?`)) {
+        selectedFiles.forEach(filename => {
+            const index = fileSystem[currentFolder].items.indexOf(filename);
+            if (index !== -1) {
+                fileSystem[currentFolder].items.splice(index, 1);
+                
+                // Pindahkan ke recycle bin
+                const details = fileDetails[filename] || { type: 'folder', size: '0 KB', modified: new Date().toISOString().split('T')[0], icon: '📁' };
+                recycleBin.push({
+                    name: filename,
+                    originalPath: currentFolder,
+                    deletedAt: new Date().toISOString(),
+                    details: details
+                });
+            }
+        });
+        
+        selectedFiles = [];
+        saveRecycleBin();
+        
+        const win = document.querySelector('.window[id^="win-files"]');
+        if (win) {
+            renderFileManager(win.querySelector('.win-content'));
+        }
+    }
+}
+
+function compressSelected() {
+    if (selectedFiles.length === 0) {
+        alert('Pilih file/folder yang akan dikompres');
+        return;
+    }
+    
+    const zipName = prompt('Nama file archive:', 'archive.zip');
+    if (zipName) {
+        alert(`Membuat archive ${zipName} dengan ${selectedFiles.length} item (simulasi)`);
+        // Di sini bisa implementasi zip sungguhan dengan JSZIP
+    }
+}
+
+function openRecycleBin() {
+    const win = document.querySelector('.window[id^="win-files"]');
+    if (!win) return;
+    
+    let html = `
+    <div class="recycle-bin">
+        <div class="recycle-bin-header">
+            <span>Recycle Bin</span>
+            <div class="recycle-bin-actions">
+                <button class="recycle-bin-btn" onclick="emptyRecycleBin()"><i class="fas fa-trash-alt"></i> Empty</button>
+                <button class="recycle-bin-btn" onclick="closeRecycleBin()"><i class="fas fa-times"></i> Close</button>
+            </div>
+        </div>
+        <div class="recycle-bin-list" id="recycle-bin-list">
+            ${renderRecycleBin()}
+        </div>
+    </div>
+    `;
+    
+    win.querySelector('.win-content').innerHTML = html;
+}
+
+function renderRecycleBin() {
+    if (recycleBin.length === 0) {
+        return '<div style="text-align:center; padding:40px; color:#6b7280;">Recycle Bin kosong</div>';
+    }
+    
+    return recycleBin.map((item, index) => {
+        const date = new Date(item.deletedAt).toLocaleString();
+        return `
+        <div class="recycle-bin-item" data-index="${index}">
+            <div class="recycle-bin-icon">${item.details.icon || '📄'}</div>
+            <div class="recycle-bin-details">
+                <div class="recycle-bin-name">${item.name}</div>
+                <div class="recycle-bin-meta">${item.details.size} • Dihapus: ${date}</div>
+            </div>
+            <div class="recycle-bin-restore" onclick="restoreFromRecycleBin(${index})" title="Restore">
+                <i class="fas fa-undo-alt"></i>
+            </div>
+        </div>
+        `;
+    }).join('');
+}
+
+function restoreFromRecycleBin(index) {
+    const item = recycleBin[index];
+    if (item) {
+        // Kembalikan ke folder asal
+        if (fileSystem[item.originalPath]) {
+            fileSystem[item.originalPath].items.push(item.name);
+        }
+        
+        // Hapus dari recycle bin
+        recycleBin.splice(index, 1);
+        saveRecycleBin();
+        
+        // Refresh tampilan
+        openRecycleBin();
+    }
+}
+
+function emptyRecycleBin() {
+    if (confirm('Yakin ingin mengosongkan Recycle Bin? Item akan dihapus permanen.')) {
+        recycleBin = [];
+        saveRecycleBin();
+        openRecycleBin();
+    }
+}
+
+function closeRecycleBin() {
+    const win = document.querySelector('.window[id^="win-files"]');
+    if (win) {
+        renderFileManager(win.querySelector('.win-content'));
+    }
+}
+
+// Drag and drop functions
+function setupDragAndDrop(container) {
+    const grid = container.querySelector('.file-grid');
+    if (!grid) return;
+    
+    grid.addEventListener('dragover', (e) => {
+        e.preventDefault();
+    });
+    
+    grid.addEventListener('drop', (e) => {
+        e.preventDefault();
+        const draggedFile = e.dataTransfer.getData('text/plain');
+        if (draggedFile && fileSystem[currentFolder]) {
+            // Pindahkan file ke folder saat ini
+            const sourceFolder = currentFolder; // Dalam implementasi nyata, perlu track source folder
+            alert(`Memindahkan ${draggedFile} ke folder ${currentFolder} (simulasi)`);
+        }
+    });
+}
+
+function dragStart(e, filename) {
+    e.dataTransfer.setData('text/plain', filename);
+    e.target.classList.add('dragging');
+}
+
+function dragEnd(e) {
+    e.target.classList.remove('dragging');
+}
+
+function dropOnItem(e, targetFilename) {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const draggedFile = e.dataTransfer.getData('text/plain');
+    if (draggedFile && draggedFile !== targetFilename) {
+        const isTargetFolder = fileSystem[targetFilename] !== undefined;
+        
+        if (isTargetFolder) {
+            // Pindahkan ke folder target
+            alert(`Memindahkan ${draggedFile} ke folder ${targetFilename} (simulasi)`);
+        }
+    }
+}
+
+function dragOver(e) {
+    e.preventDefault();
+}
+
+// ========== BROWSER FUNCTIONS ==========
+function browserGoBack(btn) { 
+    const win = btn.closest('.window'); 
+    const frame = win.querySelector('.browser-frame'); 
+    try { 
+        frame.contentWindow.history.back(); 
+        setTimeout(() => {
+            try {
+                win.querySelector('.browser-url').value = frame.contentWindow.location.href;
+            } catch(e) {}
+        }, 100);
+    } catch(e) { 
+        alert('Tidak dapat kembali'); 
+    } 
+}
+
+function browserGoForward(btn) { 
+    const win = btn.closest('.window'); 
+    const frame = win.querySelector('.browser-frame'); 
+    try { 
+        frame.contentWindow.history.forward(); 
+        setTimeout(() => {
+            try {
+                win.querySelector('.browser-url').value = frame.contentWindow.location.href;
+            } catch(e) {}
+        }, 100);
+    } catch(e) { 
+        alert('Tidak dapat maju'); 
+    } 
+}
+
+function browserRefresh(btn) { 
+    const win = btn.closest('.window'); 
+    const frame = win.querySelector('.browser-frame'); 
+    frame.src = frame.src; 
+}
+
+function browserGo(btn) {
+    const win = btn.closest('.window'); 
+    const urlInput = win.querySelector('.browser-url'); 
+    let url = urlInput.value.trim();
+    if(!url) return;
+    
+    let fullUrl = url;
+    if(!url.includes('.') || url.includes(' ')) {
+        fullUrl = 'https://www.bing.com/search?q=' + encodeURIComponent(url);
+    } else {
+        if(!url.startsWith('http')) fullUrl = 'https://' + url;
+    }
+    
+    const frame = win.querySelector('.browser-frame');
+    frame.src = fullUrl;
+    frame.style.display = 'block';
+    win.querySelector('.browser-home').style.display = 'none';
+    win.querySelector('.browser-url').value = fullUrl;
+}
+
+function browserHandleUrl(e, input) { 
+    if(e.key === 'Enter') browserGo(input); 
+}
+
+function browserHomeSearch(e, input) {
+    if(e.key === 'Enter') {
+        const win = input.closest('.window'); 
+        const query = input.value.trim();
+        if(!query) return;
+        const url = 'https://www.bing.com/search?q=' + encodeURIComponent(query);
+        const frame = win.querySelector('.browser-frame');
+        frame.src = url;
+        frame.style.display = 'block';
+        win.querySelector('.browser-home').style.display = 'none';
+        win.querySelector('.browser-url').value = url;
+    }
+}
+
+function browserSearch(btn) {
+    const win = btn.closest('.window'); 
+    const input = win.querySelector('.search-box-home'); 
+    const query = input.value.trim();
+    if(!query) return;
+    const url = 'https://www.bing.com/search?q=' + encodeURIComponent(query);
+    const frame = win.querySelector('.browser-frame');
+    frame.src = url;
+    frame.style.display = 'block';
+    win.querySelector('.browser-home').style.display = 'none';
+    win.querySelector('.browser-url').value = url;
+}
+
+function setupBrowserFrame(frame) {
+    frame.addEventListener('load', function() {
+        try {
+            const iframeDoc = frame.contentDocument || frame.contentWindow.document;
+            const links = iframeDoc.querySelectorAll('a');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    setTimeout(() => {
+                        try {
+                            const win = frame.closest('.window');
+                            win.querySelector('.browser-url').value = frame.contentWindow.location.href;
+                        } catch(err) {}
+                    }, 100);
+                });
+            });
+            
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.addedNodes) {
+                        mutation.addedNodes.forEach(function(node) {
+                            if (node.nodeName === 'A') {
+                                node.removeAttribute('target');
+                            } else if (node.querySelectorAll) {
+                                node.querySelectorAll('a[target="_blank"]').forEach(a => a.removeAttribute('target'));
+                            }
+                        });
+                    }
+                });
+            });
+            
+            observer.observe(iframeDoc.body, { childList: true, subtree: true });
+            iframeDoc.querySelectorAll('a[target="_blank"]').forEach(a => a.removeAttribute('target'));
+            
+        } catch(e) {
+            console.log('Cross-origin iframe, tidak bisa memanipulasi link');
+        }
+    });
+}
+
+// ========== SETTINGS FUNCTIONS ==========
+function switchSettingsSection(section, element) {
+    document.querySelectorAll('.settings-menu-item').forEach(el=>el.classList.remove('active'));
+    document.querySelectorAll('.settings-section').forEach(el=>el.classList.remove('active'));
+    element.classList.add('active');
+    document.getElementById(`settings-${section}`).classList.add('active');
+}
+function toggleSetting(setting, toggleElement) { toggleElement.classList.toggle('active'); console.log(`${setting} toggled: ${toggleElement.classList.contains('active')}`); }
+function changeSetting(setting, value) { console.log(`${setting} changed to: ${value}`); }
+
+// ========== CALENDAR FUNCTIONS ==========
+let currentCalendarDate = new Date();
+function updateCalendarDisplay() {
+    const monthYearEl = document.getElementById('cal-month-year');
+    const datesEl = document.getElementById('calendar-dates');
+    if (!monthYearEl || !datesEl) return;
+    
+    const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+    monthYearEl.innerText = monthNames[currentCalendarDate.getMonth()] + ' ' + currentCalendarDate.getFullYear();
+    
+    const firstDay = new Date(currentCalendarDate.getFullYear(), currentCalendarDate.getMonth(), 1).getDay();
+    const daysInMonth = new Date(currentCalendarDate.getFullYear(), currentCalendarDate.getMonth() + 1, 0).getDate();
+    const today = new Date();
+    
+    let html = '';
+    let startGap = firstDay === 0 ? 6 : firstDay - 1;
+    for (let i = 0; i < startGap; i++) {
+        html += `<div class="calendar-date other-month"></div>`;
+    }
+    for (let d = 1; d <= daysInMonth; d++) {
+        const isToday = (d === today.getDate() && 
+                        currentCalendarDate.getMonth() === today.getMonth() && 
+                        currentCalendarDate.getFullYear() === today.getFullYear()) ? 'today' : '';
+        html += `<div class="calendar-date ${isToday}">${d}</div>`;
+    }
+    datesEl.innerHTML = html;
+}
+function calendarPrevMonth() {
+    currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1);
+    updateCalendarDisplay();
+}
+function calendarNextMonth() {
+    currentCalendarDate.setMonth(currentCalendarDate.getMonth() + 1);
+    updateCalendarDisplay();
+}
+
+// ========== MUSIC PLAYER FUNCTIONS ==========
+function handleMusicFiles(files) {
+    if (!files.length) return;
+    const win = document.querySelector('.window[id^="win-music"]');
+    if (!win) return;
+    const audio = win.querySelector('#music-audio');
+    const playlistEl = win.querySelector('#music-playlist');
+    
+    musicPlaylist = [];
+    for (let file of files) {
+        musicPlaylist.push({
+            name: file.name,
+            url: URL.createObjectURL(file)
+        });
+    }
+    
+    playlistEl.innerHTML = '';
+    musicPlaylist.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = 'playlist-item' + (index === currentMusicIndex ? ' playing' : '');
+        div.innerHTML = `<i class="fas fa-music"></i> ${item.name}`;
+        div.onclick = () => playMusic(index);
+        playlistEl.appendChild(div);
+    });
+    
+    if (musicPlaylist.length > 0) {
+        currentMusicIndex = 0;
+        audio.src = musicPlaylist[0].url;
+        audio.play();
+    }
+}
+function playMusic(index) {
+    const win = document.querySelector('.window[id^="win-music"]');
+    if (!win) return;
+    const audio = win.querySelector('#music-audio');
+    const playlistItems = win.querySelectorAll('.playlist-item');
+    playlistItems.forEach((item, i) => {
+        if (i === index) item.classList.add('playing');
+        else item.classList.remove('playing');
+    });
+    currentMusicIndex = index;
+    audio.src = musicPlaylist[index].url;
+    audio.play();
+}
+
+// ========== VIDEO PLAYER FUNCTIONS ==========
+function handleVideoFile(file) {
+    if (!file) return;
+    const win = document.querySelector('.window[id^="win-video"]');
+    if (!win) return;
+    const video = win.querySelector('#video-player');
+    video.src = URL.createObjectURL(file);
+    video.load();
+    video.play();
+}
+
+// ========== WINDOW MANAGER ==========
+function openApp(id) {
+    updateDockState(id,true);
+    if(!dockItems.includes(id)&&!pinnedApps.includes(id)) { addToDock(id); }
+    if(document.getElementById('win-'+id)) { bringToFront(document.getElementById('win-'+id)); return; }
+    
+    let app = apps[id];
+    if (!app) {
+        // Fallback untuk app yang belum didefinisikan
+        app = { title: id, w: 500, h: 400, content: `<div class="app-content"><h3>${id} App</h3><p>Aplikasi sedang dalam pengembangan.</p></div>` };
+    }
+    
+    const win=document.createElement('div'); win.className='window'; win.id='win-'+id; win.style.width=app.w+'px'; win.style.height=app.h+'px';
+    const centerX=(window.innerWidth/2)-(app.w/2); const centerY=(window.innerHeight/2)-(app.h/2);
+    win.style.left=centerX+'px'; win.style.top=centerY+'px'; win.style.zIndex=++zIndex;
+    
+    win.innerHTML=`
+        <div class="win-header" onmousedown="startDrag(event, '${win.id}')">
+            <div style="width:40px"></div>
+            <div class="win-title">${app.title}</div>
+            <div class="win-controls">
+                <button class="win-btn btn-max" onclick="maximizeWindow('${win.id}')"></button>
+                <button class="win-btn btn-min" onclick="minimizeWindow('${win.id}')"></button>
+                <button class="win-btn btn-close" onclick="closeWindow('${win.id}')"></button>
+            </div>
+        </div>
+        <div class="win-content">${app.content}</div>
+        <div class="resize-handle" onmousedown="startResize(event, '${win.id}')"></div>
+    `;
+    win.addEventListener('mousedown',()=>{ bringToFront(win); updateDockState(id,true); });
+    win.addEventListener('transitionend',function(e){ if(e.propertyName==='opacity'&&!this.classList.contains('open')){ updateDockState(id,false); if(!pinnedApps.includes(id)) removeFromDock(id); } });
+    document.getElementById('windows-area').appendChild(win);
+    setTimeout(()=>win.classList.add('open'),10);
+    
+    if(id==='wheel') setTimeout(initWheel,100);
+    if(id==='calendar') setTimeout(() => { updateCalendarDisplay(); }, 100);
+    if(id==='wallpaper') initWallpaperApp();
+    if(id==='browser') {
+        setTimeout(() => {
+            const frame = win.querySelector('.browser-frame');
+            if(frame) setupBrowserFrame(frame);
+        }, 200);
+    }
+    if(id==='files') {
+        setTimeout(() => {
+            renderFileManager(win.querySelector('.win-content'));
+        }, 100);
+    }
+}
+
+function closeWindow(winId) {
+    const win=document.getElementById(winId);
+    const vid=win.querySelector('video');
+    if(vid&&vid.srcObject) vid.srcObject.getTracks().forEach(t=>t.stop());
+    const appId=winId.replace('win-','');
+    updateDockState(appId,false);
+    win.classList.remove('open');
+    setTimeout(()=>{ if(win.parentNode) win.remove(); if(!pinnedApps.includes(appId)) removeFromDock(appId); },300);
+}
+function minimizeWindow(winId) {
+    const win=document.getElementById(winId); const appId=winId.replace('win-','');
+    win.style.transform='scale(0.8) translateY(100px)'; win.style.opacity='0'; win.style.pointerEvents='none';
+    updateDockState(appId,false);
+    setTimeout(()=>{ win.style.display='none'; },300);
+}
+function maximizeWindow(winId) {
+    const win=document.getElementById(winId);
+    if(win.classList.contains('maximized')) {
+        const app=apps[winId.replace('win-','')]||{w:800,h:500};
+        win.style.width=app.w+'px'; win.style.height=app.h+'px';
+        win.style.top=((window.innerHeight/2)-(app.h/2))+'px'; win.style.left=((window.innerWidth/2)-(app.w/2))+'px';
+        win.classList.remove('maximized');
+    } else {
+        win.style.width='100%'; win.style.height=(window.innerHeight-36)+'px'; win.style.top='36px'; win.style.left='0';
+        win.classList.add('maximized');
+    }
+    bringToFront(win);
+}
+function bringToFront(el) { el.style.zIndex=++zIndex; const appId=el.id.replace('win-',''); updateDockState(appId,true); }
+
+// ========== TERMINAL ==========
+function handleTerminalCommand(e) {
+    if(e.key==='Enter') {
+        const input=e.target; const cmd=input.value.toLowerCase(); input.value='';
+        const terminal=input.closest('.terminal');
+        const output=document.createElement('div'); output.className='terminal-line'; output.innerHTML=`<span class="terminal-prompt">$</span> ${cmd}`;
+        terminal.appendChild(output);
+        let response='';
+        switch(cmd) {
+            case 'help': response='Commands: help, clear, date, time, echo [text], ls, pwd'; break;
+            case 'clear': terminal.innerHTML='<div class="terminal-line"><span class="terminal-prompt">$</span> Terminal cleared</div><div class="terminal-line"><span class="terminal-prompt">$</span> <input type="text" class="terminal-input" onkeydown="handleTerminalCommand(event)"></div>'; return;
+            case 'date': response=new Date().toLocaleDateString(); break;
+            case 'time': response=new Date().toLocaleTimeString(); break;
+            case 'ls': response='Documents  Downloads  Pictures  Music  Videos  Project'; break;
+            case 'pwd': response='/home/user'; break;
+            default: if(cmd.startsWith('echo ')) response=cmd.substring(5); else response=`Command not found: ${cmd}`;
+        }
+        const result=document.createElement('div'); result.className='terminal-line'; result.textContent=response;
+        terminal.appendChild(result);
+        const newInput=document.createElement('div'); newInput.className='terminal-line'; newInput.innerHTML='<span class="terminal-prompt">$</span> <input type="text" class="terminal-input" onkeydown="handleTerminalCommand(event)">';
+        terminal.appendChild(newInput);
+        terminal.scrollTop=terminal.scrollHeight;
+        newInput.querySelector('input').focus();
+    }
+}
+
+// ========== CALCULATOR ==========
+let calcExp='';
+function c(val) {
+    const disp=document.getElementById('calc-res'); if(!disp)return;
+    if(val==='C'){ calcExp=''; disp.value='0'; }
+    else if(val==='back'){ calcExp=calcExp.slice(0,-1); disp.value=calcExp||'0'; }
+    else{ calcExp+=val; disp.value=calcExp; }
+}
+function calc(){ try{ document.getElementById('calc-res').value=eval(calcExp); calcExp=document.getElementById('calc-res').value; } catch{ document.getElementById('calc-res').value='Error'; } }
+
+// ========== WHEEL ==========
+let wheelCtx, wheelAngle=0;
+const wheelItems=['Pufu','Miaw','Jackpot','Zonk','Handy','Coba Lagi'];
+const colors=['#ffffff','#f3f4f6'];
+function initWheel(){ const cvs=document.getElementById('wheelCanvas'); if(!cvs) return; wheelCtx=cvs.getContext('2d'); drawWheel(); }
+function drawWheel(){
+    if(!wheelCtx) return;
+    const w=300,h=300,cx=w/2,cy=h/2,r=140;
+    wheelCtx.clearRect(0,0,w,h);
+    const slice=2*Math.PI/wheelItems.length;
+    wheelItems.forEach((item,i)=>{
+        wheelCtx.beginPath(); wheelCtx.moveTo(cx,cy);
+        wheelCtx.arc(cx,cy,r,wheelAngle+i*slice,wheelAngle+(i+1)*slice);
+        wheelCtx.fillStyle=colors[i%2]; wheelCtx.fill();
+        wheelCtx.save(); wheelCtx.translate(cx,cy); wheelCtx.rotate(wheelAngle+i*slice+slice/2);
+        wheelCtx.textAlign="right"; wheelCtx.fillStyle="#111"; wheelCtx.font="bold 14px Inter";
+        wheelCtx.fillText(item,r-10,5); wheelCtx.restore();
+    });
+    wheelCtx.beginPath(); wheelCtx.moveTo(w-10,cy); wheelCtx.lineTo(w-30,cy-10); wheelCtx.lineTo(w-30,cy+10);
+    wheelCtx.fillStyle='#111'; wheelCtx.fill();
+}
+function spinWheel(){ let speed=0.5, dec=0.005; function anim(){ wheelAngle+=speed; speed-=dec; drawWheel(); if(speed>0) requestAnimationFrame(anim); } anim(); }
+
+// ========== WALLPAPER ==========
+function initWallpaperApp(){ setTimeout(()=>{ document.querySelectorAll('#wallpaper-gallery .wallpaper-item').forEach(item=>{ item.addEventListener('click',function(){ document.querySelectorAll('#wallpaper-gallery .wallpaper-item').forEach(i=>i.classList.remove('active')); this.classList.add('active'); }); }); },100); }
+function switchWallpaperTab(tabName){
+    document.querySelectorAll('.wallpaper-tab').forEach(tab=>tab.classList.remove('active'));
+    document.querySelector(`.wallpaper-tab[onclick*="${tabName}"]`).classList.add('active');
+    document.querySelectorAll('.wallpaper-tab-content').forEach(c=>c.classList.remove('active'));
+    document.getElementById(`wallpaper-${tabName}`).classList.add('active');
+}
+function applyWallpaper(url){ saveWallpaper(url); alert('Wallpaper berhasil diubah!'); }
+function applyColorWallpaper(color){ document.getElementById('desktop').style.backgroundImage='none'; document.getElementById('desktop').style.backgroundColor=color; localStorage.setItem('pufutara_wallpaper',color); }
+function handleWallpaperUpload(event){
+    const file=event.target.files[0]; if(!file) return;
+    if(!file.type.match('image.*')){ alert('Hanya file gambar yang diperbolehkan!'); return; }
+    const reader=new FileReader(); reader.onload=function(e){ applyWallpaper(e.target.result); }; reader.readAsDataURL(file);
+}
+
+// ========== DRAG WINDOW ==========
+let isDragging=false, currentWin=null, offset={x:0,y:0};
+function startDrag(e,id){ isDragging=true; currentWin=document.getElementById(id); const rect=currentWin.getBoundingClientRect(); offset.x=e.clientX-rect.left; offset.y=e.clientY-rect.top; currentWin.classList.add('dragging'); bringToFront(currentWin); }
+document.addEventListener('mousemove',(e)=>{ if(!isDragging||!currentWin) return; e.preventDefault(); currentWin.style.left=(e.clientX-offset.x)+'px'; currentWin.style.top=(e.clientY-offset.y)+'px'; });
+document.addEventListener('mouseup',()=>{ if(currentWin) currentWin.classList.remove('dragging'); isDragging=false; currentWin=null; });
+
+// ========== RESIZE WINDOW ==========
+let isResizing=false, resizeWin=null;
+function startResize(e,id){ e.stopPropagation(); isResizing=true; resizeWin=document.getElementById(id); }
+document.addEventListener('mousemove',(e)=>{ if(!isResizing||!resizeWin) return; resizeWin.style.width=(e.clientX-resizeWin.getBoundingClientRect().left)+'px'; resizeWin.style.height=(e.clientY-resizeWin.getBoundingClientRect().top)+'px'; });
+document.addEventListener('mouseup',()=>{ isResizing=false; resizeWin=null; });
+
+// ========== APP DATA ==========
 const apps = {
     'files': {
-        title: 'File Explorer', w: 700, h: 450,
-        content: `<div style="display:flex; height:100%;">
-            <div class="file-sidebar">
-                <div class="file-item">💻 Desktop</div>
-                <div class="file-item" style="background:#e2e8f0; color:#111; font-weight:600;">📁 Documents</div>
-                <div class="file-item">⬇️ Downloads</div>
-                <div class="file-item">🖼️ Pictures</div>
-                <div class="file-item">🎵 Music</div>
-                <div class="file-item">🎥 Videos</div>
-            </div>
-            <div class="file-main">
-                <div><div class="f-icon">📁</div><div class="f-name">Project</div></div>
-                <div><div class="f-icon">📁</div><div class="f-name">Foto Liburan</div></div>
-                <div><div class="f-icon">📄</div><div class="f-name">Tugas.docx</div></div>
-                <div><div class="f-icon">🖼️</div><div class="f-name">Wallpaper.jpg</div></div>
-                <div><div class="f-icon">🎵</div><div class="f-name">Lagu.mp3</div></div>
-                <div><div class="f-icon">🎥</div><div class="f-name">Video.mp4</div></div>
-                <div><div class="f-icon">💾</div><div class="f-name">Setup.exe</div></div>
-                <div><div class="f-icon">📊</div><div class="f-name">Data.xlsx</div></div>
-            </div>
-        </div>`
+        title: 'File Explorer', w: 900, h: 550,
+        content: `<div class="file-manager-placeholder"></div>`
     },
     'browser': {
         title: 'Pufutara Browser (Bing)', w: 950, h: 600,
@@ -1938,34 +3360,40 @@ const apps = {
         </div>`
     },
     'calendar': {
-        title: 'Kalender', w: 320, h: 360,
-        content: `<div style="height:100%; display:flex; flex-direction:column;">
-            <div class="cal-header">
-                <span id="cal-month-year">...</span>
-                <div style="display:flex; gap:10px;">
-                    <button style="border:none; background:transparent; cursor:pointer;"><</button>
-                    <button style="border:none; background:transparent; cursor:pointer;">></button>
+        title: 'Kalender', w: 450, h: 500,
+        content: `<div class="calendar-app">
+            <div class="calendar-header">
+                <h2 id="cal-month-year">Maret 2025</h2>
+                <div class="calendar-nav">
+                    <button onclick="calendarPrevMonth()"><i class="fas fa-chevron-left"></i></button>
+                    <button onclick="calendarNextMonth()"><i class="fas fa-chevron-right"></i></button>
                 </div>
             </div>
-            <div class="cal-grid" style="padding-bottom:0;">
-                <div class="cal-day-name">Sen</div><div class="cal-day-name">Sel</div><div class="cal-day-name">Rab</div>
-                <div class="cal-day-name">Kam</div><div class="cal-day-name">Jum</div><div class="cal-day-name">Sab</div><div class="cal-day-name">Min</div>
+            <div class="calendar-weekdays">
+                <div>Sen</div><div>Sel</div><div>Rab</div><div>Kam</div><div>Jum</div><div>Sab</div><div>Min</div>
             </div>
-            <div class="cal-grid" id="cal-dates"></div>
+            <div class="calendar-dates" id="calendar-dates"></div>
         </div>`
     },
     'music': {
-        title: 'Music Player', w: 350, h: 400,
-        content: `<div class="music-player">
-            <div class="music-cover">🎵</div>
-            <div class="music-info">
-                <div class="music-title">Lagu Favorit</div>
-                <div class="music-artist">Artis Pilihan</div>
-                <div class="music-controls-app">
-                    <button onclick="musicControl('prev')">⏮</button>
-                    <button onclick="musicControl('play')">▶️</button>
-                    <button onclick="musicControl('next')">⏭</button>
-                </div>
+        title: 'Music Player', w: 450, h: 500,
+        content: `<div class="music-player-enhanced">
+            <h3 style="margin-top:0; margin-bottom:15px;">Music Player</h3>
+            <div class="file-input">
+                <input type="file" id="music-file-input" accept="audio/*" multiple onchange="handleMusicFiles(this.files)">
+                <label for="music-file-input">Pilih file audio</label>
+            </div>
+            <audio id="music-audio" controls style="width:100%; margin:10px 0;"></audio>
+            <div class="playlist" id="music-playlist"></div>
+        </div>`
+    },
+    'video': {
+        title: 'Video Player', w: 700, h: 500,
+        content: `<div class="video-player-enhanced">
+            <video id="video-player" controls style="width:100%; flex:1; background:#000;"></video>
+            <div class="video-controls">
+                <input type="file" id="video-file-input" accept="video/*" onchange="handleVideoFile(this.files[0])">
+                <span>Pilih file video</span>
             </div>
         </div>`
     },
@@ -2022,15 +3450,6 @@ const apps = {
                 <div style="aspect-ratio:1; background:#e5e7eb; border-radius:8px;"></div>
                 <div style="aspect-ratio:1; background:#d1d5db; border-radius:8px;"></div>
                 <div style="aspect-ratio:1; background:#9ca3af; border-radius:8px;"></div>
-            </div>
-        </div>`
-    },
-    'video': {
-        title: 'Video Player', w: 600, h: 400,
-        content: `<div class="app-content">
-            <h3 style="margin-top:0;">Pemutar Video</h3>
-            <div style="background:#000; aspect-ratio:16/9; border-radius:8px; display:flex; align-items:center; justify-content:center; color:white; font-size:40px;">
-                ▶️
             </div>
         </div>`
     },
@@ -2129,220 +3548,17 @@ const apps = {
     },
     'snake': {
         title: 'Snake', w: 500, h: 500,
-        content: `...` // (isi lengkap ada di kode sebelumnya, disingkat agar tidak terlalu panjang)
+        content: `<div class="game-container"><h3>Snake Game</h3><p>Coming soon...</p></div>`
     },
     'tictactoe': {
         title: 'Tic Tac Toe', w: 400, h: 450,
-        content: `...`
+        content: `<div class="game-container"><h3>Tic Tac Toe</h3><p>Coming soon...</p></div>`
     },
     'memory': {
         title: 'Memory Game', w: 450, h: 500,
-        content: `...`
+        content: `<div class="game-container"><h3>Memory Game</h3><p>Coming soon...</p></div>`
     }
 };
-
-// ========== BROWSER FUNCTIONS (SINGLE TAB) ==========
-function browserGoBack(btn) { const win=btn.closest('.window'); const frame=win.querySelector('.browser-frame'); try { frame.contentWindow.history.back(); } catch(e){ alert('Tidak dapat kembali'); } }
-function browserGoForward(btn) { const win=btn.closest('.window'); const frame=win.querySelector('.browser-frame'); try { frame.contentWindow.history.forward(); } catch(e){ alert('Tidak dapat maju'); } }
-function browserRefresh(btn) { const win=btn.closest('.window'); const frame=win.querySelector('.browser-frame'); frame.src=frame.src; }
-function browserGo(btn) {
-    const win=btn.closest('.window'); const urlInput=win.querySelector('.browser-url'); const url=urlInput.value.trim();
-    if(!url) return;
-    let fullUrl=url;
-    if(!url.includes('.')||url.includes(' ')) fullUrl='https://www.bing.com/search?q='+encodeURIComponent(url);
-    else { if(!url.startsWith('http')) fullUrl='https://'+url; }
-    win.querySelector('.browser-frame').src=fullUrl; win.querySelector('.browser-frame').style.display='block';
-    win.querySelector('.browser-home').style.display='none'; win.querySelector('.browser-url').value=fullUrl;
-}
-function browserHandleUrl(e,input) { if(e.key==='Enter') browserGo(input); }
-function browserHomeSearch(e,input) {
-    if(e.key==='Enter') {
-        const win=input.closest('.window'); const query=input.value.trim();
-        if(!query) return;
-        const url='https://www.bing.com/search?q='+encodeURIComponent(query);
-        win.querySelector('.browser-frame').src=url; win.querySelector('.browser-frame').style.display='block';
-        win.querySelector('.browser-home').style.display='none'; win.querySelector('.browser-url').value=url;
-    }
-}
-function browserSearch(btn) {
-    const win=btn.closest('.window'); const input=win.querySelector('.search-box-home'); const query=input.value.trim();
-    if(!query) return;
-    const url='https://www.bing.com/search?q='+encodeURIComponent(query);
-    win.querySelector('.browser-frame').src=url; win.querySelector('.browser-frame').style.display='block';
-    win.querySelector('.browser-home').style.display='none'; win.querySelector('.browser-url').value=url;
-}
-
-// ========== SETTINGS FUNCTIONS ==========
-function switchSettingsSection(section, element) {
-    document.querySelectorAll('.settings-menu-item').forEach(el=>el.classList.remove('active'));
-    document.querySelectorAll('.settings-section').forEach(el=>el.classList.remove('active'));
-    element.classList.add('active');
-    document.getElementById(`settings-${section}`).classList.add('active');
-}
-function toggleSetting(setting, toggleElement) { toggleElement.classList.toggle('active'); console.log(`${setting} toggled: ${toggleElement.classList.contains('active')}`); }
-function changeSetting(setting, value) { console.log(`${setting} changed to: ${value}`); }
-
-// ========== WINDOW MANAGER ==========
-function openApp(id) {
-    updateDockState(id,true);
-    if(!dockItems.includes(id)&&!pinnedApps.includes(id)) { addToDock(id); }
-    if(document.getElementById('win-'+id)) { bringToFront(document.getElementById('win-'+id)); return; }
-    const app=apps[id];
-    const win=document.createElement('div'); win.className='window'; win.id='win-'+id; win.style.width=app.w+'px'; win.style.height=app.h+'px';
-    const centerX=(window.innerWidth/2)-(app.w/2); const centerY=(window.innerHeight/2)-(app.h/2);
-    win.style.left=centerX+'px'; win.style.top=centerY+'px'; win.style.zIndex=++zIndex;
-    // Window controls di kanan dengan urutan max, min, close
-    win.innerHTML=`
-        <div class="win-header" onmousedown="startDrag(event, '${win.id}')">
-            <div style="width:40px"></div>
-            <div class="win-title">${app.title}</div>
-            <div class="win-controls">
-                <button class="win-btn btn-max" onclick="maximizeWindow('${win.id}')"></button>
-                <button class="win-btn btn-min" onclick="minimizeWindow('${win.id}')"></button>
-                <button class="win-btn btn-close" onclick="closeWindow('${win.id}')"></button>
-            </div>
-        </div>
-        <div class="win-content">${app.content}</div>
-        <div class="resize-handle" onmousedown="startResize(event, '${win.id}')"></div>
-    `;
-    win.addEventListener('mousedown',()=>{ bringToFront(win); updateDockState(id,true); });
-    win.addEventListener('transitionend',function(e){ if(e.propertyName==='opacity'&&!this.classList.contains('open')){ updateDockState(id,false); if(!pinnedApps.includes(id)) removeFromDock(id); } });
-    document.getElementById('windows-area').appendChild(win);
-    setTimeout(()=>win.classList.add('open'),10);
-    if(id==='wheel') setTimeout(initWheel,100);
-    if(id==='calendar') setTimeout(initCalendar,100);
-    if(id==='wallpaper') initWallpaperApp();
-}
-
-function closeWindow(winId) {
-    const win=document.getElementById(winId);
-    const vid=win.querySelector('video');
-    if(vid&&vid.srcObject) vid.srcObject.getTracks().forEach(t=>t.stop());
-    const appId=winId.replace('win-','');
-    updateDockState(appId,false);
-    win.classList.remove('open');
-    setTimeout(()=>{ if(win.parentNode) win.remove(); if(!pinnedApps.includes(appId)) removeFromDock(appId); },300);
-}
-function minimizeWindow(winId) {
-    const win=document.getElementById(winId); const appId=winId.replace('win-','');
-    win.style.transform='scale(0.8) translateY(100px)'; win.style.opacity='0'; win.style.pointerEvents='none';
-    updateDockState(appId,false);
-    setTimeout(()=>{ win.style.display='none'; },300);
-}
-function maximizeWindow(winId) {
-    const win=document.getElementById(winId);
-    if(win.classList.contains('maximized')) {
-        const app=apps[winId.replace('win-','')]||{w:800,h:500};
-        win.style.width=app.w+'px'; win.style.height=app.h+'px';
-        win.style.top=((window.innerHeight/2)-(app.h/2))+'px'; win.style.left=((window.innerWidth/2)-(app.w/2))+'px';
-        win.classList.remove('maximized');
-    } else {
-        win.style.width='100%'; win.style.height=(window.innerHeight-36)+'px'; win.style.top='36px'; win.style.left='0';
-        win.classList.add('maximized');
-    }
-    bringToFront(win);
-}
-function bringToFront(el) { el.style.zIndex=++zIndex; const appId=el.id.replace('win-',''); updateDockState(appId,true); }
-
-// ========== TERMINAL ==========
-function handleTerminalCommand(e) {
-    if(e.key==='Enter') {
-        const input=e.target; const cmd=input.value.toLowerCase(); input.value='';
-        const terminal=input.closest('.terminal');
-        const output=document.createElement('div'); output.className='terminal-line'; output.innerHTML=`<span class="terminal-prompt">$</span> ${cmd}`;
-        terminal.appendChild(output);
-        let response='';
-        switch(cmd) {
-            case 'help': response='Commands: help, clear, date, time, echo [text]'; break;
-            case 'clear': terminal.innerHTML='<div class="terminal-line"><span class="terminal-prompt">$</span> Terminal cleared</div><div class="terminal-line"><span class="terminal-prompt">$</span> <input type="text" class="terminal-input" onkeydown="handleTerminalCommand(event)"></div>'; return;
-            case 'date': response=new Date().toLocaleDateString(); break;
-            case 'time': response=new Date().toLocaleTimeString(); break;
-            default: if(cmd.startsWith('echo ')) response=cmd.substring(5); else response=`Command not found: ${cmd}`;
-        }
-        const result=document.createElement('div'); result.className='terminal-line'; result.textContent=response;
-        terminal.appendChild(result);
-        const newInput=document.createElement('div'); newInput.className='terminal-line'; newInput.innerHTML='<span class="terminal-prompt">$</span> <input type="text" class="terminal-input" onkeydown="handleTerminalCommand(event)">';
-        terminal.appendChild(newInput);
-        terminal.scrollTop=terminal.scrollHeight;
-        newInput.querySelector('input').focus();
-    }
-}
-
-// ========== CALCULATOR ==========
-let calcExp='';
-function c(val) {
-    const disp=document.getElementById('calc-res'); if(!disp)return;
-    if(val==='C'){ calcExp=''; disp.value='0'; }
-    else if(val==='back'){ calcExp=calcExp.slice(0,-1); disp.value=calcExp||'0'; }
-    else{ calcExp+=val; disp.value=calcExp; }
-}
-function calc(){ try{ document.getElementById('calc-res').value=eval(calcExp); calcExp=document.getElementById('calc-res').value; } catch{ document.getElementById('calc-res').value='Error'; } }
-
-// ========== WHEEL ==========
-let wheelCtx, wheelAngle=0;
-const wheelItems=['Pufu','Miaw','Jackpot','Zonk','Handy','Coba Lagi'];
-const colors=['#ffffff','#f3f4f6'];
-function initWheel(){ const cvs=document.getElementById('wheelCanvas'); if(!cvs) return; wheelCtx=cvs.getContext('2d'); drawWheel(); }
-function drawWheel(){
-    if(!wheelCtx) return;
-    const w=300,h=300,cx=w/2,cy=h/2,r=140;
-    wheelCtx.clearRect(0,0,w,h);
-    const slice=2*Math.PI/wheelItems.length;
-    wheelItems.forEach((item,i)=>{
-        wheelCtx.beginPath(); wheelCtx.moveTo(cx,cy);
-        wheelCtx.arc(cx,cy,r,wheelAngle+i*slice,wheelAngle+(i+1)*slice);
-        wheelCtx.fillStyle=colors[i%2]; wheelCtx.fill();
-        wheelCtx.save(); wheelCtx.translate(cx,cy); wheelCtx.rotate(wheelAngle+i*slice+slice/2);
-        wheelCtx.textAlign="right"; wheelCtx.fillStyle="#111"; wheelCtx.font="bold 14px Inter";
-        wheelCtx.fillText(item,r-10,5); wheelCtx.restore();
-    });
-    wheelCtx.beginPath(); wheelCtx.moveTo(w-10,cy); wheelCtx.lineTo(w-30,cy-10); wheelCtx.lineTo(w-30,cy+10);
-    wheelCtx.fillStyle='#111'; wheelCtx.fill();
-}
-function spinWheel(){ let speed=0.5, dec=0.005; function anim(){ wheelAngle+=speed; speed-=dec; drawWheel(); if(speed>0) requestAnimationFrame(anim); } anim(); }
-
-// ========== CALENDAR ==========
-function initCalendar() {
-    const date=new Date();
-    const monthNames=["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
-    const container=document.getElementById('cal-dates'); if(!container) return;
-    document.getElementById('cal-month-year').innerText=monthNames[date.getMonth()]+' '+date.getFullYear();
-    const firstDay=new Date(date.getFullYear(),date.getMonth(),1).getDay();
-    const daysInMonth=new Date(date.getFullYear(),date.getMonth()+1,0).getDate();
-    let html='';
-    let startGap=firstDay===0?6:firstDay-1;
-    for(let i=0;i<startGap;i++) html+=`<div></div>`;
-    for(let i=1;i<=daysInMonth;i++){ let isToday=i===date.getDate()?'active':''; html+=`<div class="cal-date ${isToday}">${i}</div>`; }
-    container.innerHTML=html;
-}
-
-// ========== WALLPAPER ==========
-function initWallpaperApp(){ setTimeout(()=>{ document.querySelectorAll('#wallpaper-gallery .wallpaper-item').forEach(item=>{ item.addEventListener('click',function(){ document.querySelectorAll('#wallpaper-gallery .wallpaper-item').forEach(i=>i.classList.remove('active')); this.classList.add('active'); }); }); },100); }
-function switchWallpaperTab(tabName){
-    document.querySelectorAll('.wallpaper-tab').forEach(tab=>tab.classList.remove('active'));
-    document.querySelector(`.wallpaper-tab[onclick*="${tabName}"]`).classList.add('active');
-    document.querySelectorAll('.wallpaper-tab-content').forEach(c=>c.classList.remove('active'));
-    document.getElementById(`wallpaper-${tabName}`).classList.add('active');
-}
-function applyWallpaper(url){ saveWallpaper(url); alert('Wallpaper berhasil diubah!'); }
-function applyColorWallpaper(color){ document.getElementById('desktop').style.backgroundImage='none'; document.getElementById('desktop').style.backgroundColor=color; localStorage.setItem('pufutara_wallpaper',color); }
-function handleWallpaperUpload(event){
-    const file=event.target.files[0]; if(!file) return;
-    if(!file.type.match('image.*')){ alert('Hanya file gambar yang diperbolehkan!'); return; }
-    const reader=new FileReader(); reader.onload=function(e){ applyWallpaper(e.target.result); }; reader.readAsDataURL(file);
-}
-
-// ========== DRAG WINDOW ==========
-let isDragging=false, currentWin=null, offset={x:0,y:0};
-function startDrag(e,id){ isDragging=true; currentWin=document.getElementById(id); const rect=currentWin.getBoundingClientRect(); offset.x=e.clientX-rect.left; offset.y=e.clientY-rect.top; currentWin.classList.add('dragging'); bringToFront(currentWin); }
-document.addEventListener('mousemove',(e)=>{ if(!isDragging||!currentWin) return; e.preventDefault(); currentWin.style.left=(e.clientX-offset.x)+'px'; currentWin.style.top=(e.clientY-offset.y)+'px'; });
-document.addEventListener('mouseup',()=>{ if(currentWin) currentWin.classList.remove('dragging'); isDragging=false; currentWin=null; });
-
-// ========== RESIZE WINDOW ==========
-let isResizing=false, resizeWin=null;
-function startResize(e,id){ e.stopPropagation(); isResizing=true; resizeWin=document.getElementById(id); }
-document.addEventListener('mousemove',(e)=>{ if(!isResizing||!resizeWin) return; resizeWin.style.width=(e.clientX-resizeWin.getBoundingClientRect().left)+'px'; resizeWin.style.height=(e.clientY-resizeWin.getBoundingClientRect().top)+'px'; });
-document.addEventListener('mouseup',()=>{ isResizing=false; resizeWin=null; });
 </script>
 </body>
 </html>
